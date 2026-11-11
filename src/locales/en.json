@@ -1,0 +1,20 @@
+{
+  "UNAUTHENTICATED": "Authentication required",
+  "FORBIDDEN": "You do not have permission to perform this action",
+  "INVALID_PATH_PARAMETER": "Invalid path parameter",
+  "NOT_FOUND": "Route not found",
+  "VALIDATION_ERROR": "Request validation failed",
+  "CONFLICT": "A record with these details already exists",
+  "BAD_REQUEST": "Invalid request",
+  "PAYLOAD_TOO_LARGE": "Request body is too large",
+  "INTERNAL_ERROR": "An unexpected error occurred",
+  "EMAIL_IN_USE": "An account with this email already exists",
+  "INVALID_CREDENTIALS": "Email or password is incorrect",
+  "JOB_NOT_FOUND": "Job not found",
+  "JOB_CLOSED": "Job is already closed",
+  "PROPOSAL_NOT_FOUND": "Proposal not found",
+  "PROPOSAL_NOT_PENDING": "Only pending proposals can be changed",
+  "CONVERSATION_NOT_FOUND": "Conversation not found",
+  "PROFILE_NOT_FOUND": "Profile not found",
+  "RATE_LIMITED": "Too many requests. Please try again later."
+}

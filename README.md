@@ -54,6 +54,8 @@ Use these accounts only with local sample data. Do not run the seed against a li
 
 All routes are under `/api` and return JSON. Success payloads use `{ "data": ... }`; errors use `{ "error": { "code": ..., "message": ... } }`.
 
+Error messages are returned in English by default. Clients can request Burmese error messages with `Accept-Language: my` (or `my-MM`); the response includes the selected locale in `Content-Language`. Stable error `code` values are language-independent.
+
 | Method | Route | Access | Purpose |
 |---|---|---|---|
 | POST | `/auth/register` | Public | Create client/freelancer and profile |
