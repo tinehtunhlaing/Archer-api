@@ -64,6 +64,7 @@ Error messages are returned in English by default. Clients can request Burmese e
 | GET, PUT | `/profiles/me` | Authenticated | Read/update own profile |
 | GET | `/profiles/:userId` | Public | Read public profile |
 | GET | `/jobs` | Public | Browse open jobs; supports `q`, `currency`, `limit`, `cursor` |
+| GET | `/jobs/mine` | Client | List jobs owned by the signed-in client, including closed jobs; supports `limit`, `cursor` |
 | GET | `/jobs/:jobId` | Public | Read an open job |
 | POST | `/jobs` | Client | Create a job |
 | PATCH | `/jobs/:jobId/close` | Owning client | Close a job |

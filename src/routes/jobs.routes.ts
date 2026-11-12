@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { z } from "zod";
-import { requireAuth, requireRole } from "../auth.js";
+import { optionalAuth, requireAuth, requireRole } from "../auth.js";
 import { prisma } from "../db.js";
 import { asyncHandler, HttpError, pathParam } from "../http.js";
 
@@ -49,7 +49,25 @@ jobsRouter.get("/", asyncHandler(async (request, response) => {
   response.json({ data: jobs, nextCursor: jobs.length === query.limit ? jobs.at(-1)?.id ?? null : null });
 }));
 
-jobsRouter.get("/:jobId", asyncHandler(async (request, response) => {
+jobsRouter.get("/mine", requireAuth, requireRole("CLIENT"), asyncHandler(async (request, response) => {
+  const query = z.object({
+    limit: z.coerce.number().int().min(1).max(100).default(20),
+    cursor: z.string().optional(),
+  }).parse(request.query);
+  const jobs = await prisma.job.findMany({
+    where: { clientId: request.auth!.userId },
+    take: query.limit,
+    ...(query.cursor ? { skip: 1, cursor: { id: query.cursor } } : {}),
+    orderBy: { createdAt: "desc" },
+    include: {
+      client: { select: { id: true, profile: { select: { displayName: true } } } },
+      _count: { select: { proposals: true } },
+    },
+  });
+  response.json({ data: jobs, nextCursor: jobs.length === query.limit ? jobs.at(-1)?.id ?? null : null });
+}));
+
+jobsRouter.get("/:jobId", optionalAuth, asyncHandler(async (request, response) => {
   const job = await prisma.job.findUnique({
     where: { id: pathParam(request, "jobId") },
     include: { client: { select: { id: true, profile: { select: { displayName: true } } } }, _count: { select: { proposals: true } } },

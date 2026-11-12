@@ -54,6 +54,29 @@ export function requireAuth(request: Request, _response: Response, next: NextFun
   }
 }
 
+export function optionalAuth(request: Request, _response: Response, next: NextFunction) {
+  const authorization = request.header("authorization");
+  if (!authorization) {
+    next();
+    return;
+  }
+  if (!authorization.startsWith("Bearer ")) {
+    next(new HttpError(401, "Invalid authorization header", "UNAUTHENTICATED"));
+    return;
+  }
+  try {
+    const decoded = jwt.verify(authorization.slice(7), config.JWT_SECRET, {
+      issuer: "archer-api",
+      audience: "archer-clients",
+    });
+    const payload = jwtPayloadSchema.parse(decoded);
+    request.auth = { userId: payload.sub, role: payload.role };
+    next();
+  } catch {
+    next(new HttpError(401, "Invalid or expired access token", "UNAUTHENTICATED"));
+  }
+}
+
 export function requireRole(...allowedRoles: Role[]) {
   return (request: Request, _response: Response, next: NextFunction) => {
     if (!request.auth || !allowedRoles.includes(request.auth.role)) {
