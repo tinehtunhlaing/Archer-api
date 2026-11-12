@@ -89,6 +89,7 @@ Error messages are returned in English by default. Clients can request Burmese e
 - `npm run dev` — development server with reload
 - `npm run build` — generate Prisma client and compile TypeScript
 - `npm run start` — run compiled server
+- `npm test` — run API integration tests against an isolated temporary SQLite database
 - `npm run typecheck` — Prisma generation and TypeScript check
 - `npm run db:migrate -- --name <migration>` — create/apply local development migration
 - `npm run db:deploy` — apply committed migrations in deployment
