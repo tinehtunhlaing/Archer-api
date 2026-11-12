@@ -94,3 +94,7 @@ Error messages are returned in English by default. Clients can request Burmese e
 - `npm run db:deploy` — apply committed migrations in deployment
 - `npm run db:seed` — add or update local sample accounts and marketplace activity
 - `npm run db:studio` — open Prisma Studio
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
